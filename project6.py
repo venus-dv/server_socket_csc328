@@ -17,6 +17,21 @@ import socket
 
 def main():
 
+    if len(sys.argv) != 2:
+        exit('Usage: server <port>')
+    try:
+        with socket.socket() as s:
+            s.bind(("127.0.0.1", int(sys.argv[1])))
+            s.listen()
+            while True:
+                (client_sock, client_add) = s.accept()
+
+                while True:
+                    data = client_sock.recv(1024)
+                    print
+    except OSError as err:
+        exit(f'{err}')
+
 
 if __name__ == "__main__":
     main()
