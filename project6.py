@@ -28,7 +28,9 @@ def main():
 
                 while True:
                     data = client_sock.recv(1024)
-                    print
+                    if data != b'':
+                        client_sock.sendall(data)
+                        break
     except OSError as err:
         exit(f'{err}')
 
