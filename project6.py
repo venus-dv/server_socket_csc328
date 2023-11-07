@@ -17,9 +17,9 @@ import random
 # Parameters:   
 # Returns: 
 
-def interrupt_handler(s):
+def interrupt_handler(s_socket):
     print("Server stopped.")
-    s.close()
+    s_socket.close()
     sys.exit(0)
 
 def create_word_packets(file_in):
@@ -45,29 +45,28 @@ def main():
     if len(sys.argv) != 2:
         exit('Usage: server <port>')
     try:
-        with socket.socket() as s:
+        print("args: ", sys.argv[0], sys.argv[1])
 
-            print("args: ", sys.argv[0], sys.argv[1])
+        s_socket = socket.socket()
+        s_socket.bind(("0.0.0.0", int(sys.argv[1])))
+        s_socket.listen()
 
-            s.bind(("0.0.0.0", int(sys.argv[1])))
-            s.listen()
+        signal.signal(signal.SIGINT, interrupt_handler(s_socket))
 
-            signal.signal(signal.SIGINT, interrupt_handler(s))
+        while True:
+            (client_sock, client_add) = s_socket.accept()
 
-            while True:
-                (client_sock, client_add) = s.accept()
+            file_in = "words.txt"
+            word_packets = create_word_packets(file_in)
 
-                file_in = "words.txt"
-                word_packets = create_word_packets(file_in)
+            for packet in word_packets:
+                print(packet)
 
-                for packet in word_packets:
-                    print(packet)
+                client_sock.sendall(packet)
+            
+            print("Sent: ", word_packets)
 
-                    client_sock.sendall(packet)
-                
-                print("Sent: ", word_packets)
-
-                client_sock.close()
+            client_sock.close()
 
     except OSError as err:
         exit(f"Error: ", err)
