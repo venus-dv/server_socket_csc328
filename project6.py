@@ -56,7 +56,7 @@ def main():
 
         print("A")
 
-        s_socket.listen()
+        s_socket.listen(5)
 
         print("B")
 
