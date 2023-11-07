@@ -17,10 +17,10 @@ import random
 # Parameters:   
 # Returns: 
 
-def interrupt_handler(s_socket):
-    print("Server stopped.")
-    s_socket.close()
-    sys.exit(0)
+# def interrupt_handler(s_socket):
+#     print("Server stopped.")
+#     s_socket.close()
+#     sys.exit(0)
 
 def create_word_packets(file_in):
 
@@ -51,7 +51,7 @@ def main():
         s_socket.bind(("0.0.0.0", int(sys.argv[1])))
         s_socket.listen()
 
-        signal.signal(signal.SIGINT, interrupt_handler(s_socket))
+        # signal.signal(signal.SIGINT, interrupt_handler(s_socket))
 
         while True:
             (client_sock, client_add) = s_socket.accept()
@@ -69,7 +69,7 @@ def main():
             client_sock.close()
 
     except OSError as err:
-	print("Error: ", err)
+        print("Error: ", err)
         sys.exit(-1)
 
 
