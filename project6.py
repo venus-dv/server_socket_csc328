@@ -69,7 +69,8 @@ def main():
             client_sock.close()
 
     except OSError as err:
-        exit(f"Error: ", err)
+	print("Error: ", err)
+        sys.exit(-1)
 
 
 if __name__ == "__main__":
