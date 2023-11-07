@@ -20,7 +20,6 @@ import random
 
 def signal_handler(sig, frame):
     print("Server stopped.")
-    s_socket.close()
     sys.exit(0)
 
 def create_word_packets(file_in):
