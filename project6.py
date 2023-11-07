@@ -65,7 +65,7 @@ def main():
 
                     client_sock.sendall(packet)
                 
-                print(f"Sent: ",  len(word_packets))
+                print("Sent: ", word_packets)
 
                 client_sock.close()
 
