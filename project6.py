@@ -8,6 +8,7 @@
 #	Purpose: 	This server program sends word data to connected clients
 
 import signal
+import os
 import sys
 import socket
 import struct
@@ -17,10 +18,10 @@ import random
 # Parameters:   
 # Returns: 
 
-# def interrupt_handler(s_socket):
-#     print("Server stopped.")
-#     s_socket.close()
-#     sys.exit(0)
+def signal_handler(sig, frame):
+    print("Server stopped.")
+    s_socket.close()
+    sys.exit(0)
 
 def create_word_packets(file_in):
 
@@ -48,16 +49,26 @@ def main():
         print("args: ", sys.argv[0], sys.argv[1])
 
         s_socket = socket.socket()
-        s_socket.bind(("0.0.0.0", int(sys.argv[1])))
+
+        print("Socket: ", s_socket)
+
+        s_socket.bind(("127.0.0.1", int(sys.argv[1])))
+
+        print("A")
+
         s_socket.listen()
 
-        # signal.signal(signal.SIGINT, interrupt_handler(s_socket))
+        print("B")
 
         while True:
             (client_sock, client_add) = s_socket.accept()
 
+            print("passed accept")
+
             file_in = "words.txt"
             word_packets = create_word_packets(file_in)
+
+            print("passed create word packets")
 
             for packet in word_packets:
                 print(packet)
@@ -74,4 +85,11 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    signal.signal(signal.SIGINT, signal_handler)
+    pid = os.fork()
+    if pid == 0:
+        main()
+    else:
+        child_pid, exit_status = os.wait()
+
+# python project6.py 55555
