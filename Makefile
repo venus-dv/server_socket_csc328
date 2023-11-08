@@ -9,8 +9,7 @@
 all: server
 
 server: project6.py
-	@touch server
-	@echo 'python project6.py "$@"' > ./server
+	@cp project6.py server
 	@chmod a+x server
 
 .PHONY: clean submit
