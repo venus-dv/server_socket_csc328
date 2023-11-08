@@ -38,9 +38,8 @@ def main():
 
     try:
         s_socket = socket.socket()
-        s_socket.bind(("127.0.0.1", int(sys.argv[1])))
+        s_socket.bind(("0.0.0.0", int(sys.argv[1])))
         s_socket.listen(5)
-        print("Listening...")
         while True:
             (client_sock, client_add) = s_socket.accept()
 
