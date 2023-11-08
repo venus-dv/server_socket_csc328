@@ -73,7 +73,7 @@ def bytes_to_int(byte_data):
     if len(byte_data) == 2:
         try:
             # unpack the bytes as an integer
-            integer = struct.unpack('>H', byte_data)[0]
+            integer = struct.unpack('!H', byte_data)[0]
         except struct.error as e :
             print("Error trying to unpack bytes: ", e)
             sys.exit(-1)
