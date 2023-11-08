@@ -11,6 +11,7 @@ diamond
 dog
 moon
 rainbow
+day
 strawberry
 flower
 jet
@@ -23,3 +24,12 @@ xylophone
 followed
 food
 car
+bird
+yellow
+night
+sun
+shirt
+water
+soda
+lemon
+lime
